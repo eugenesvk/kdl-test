@@ -19,11 +19,11 @@ use cli_opt::*;
 
 static _dbg:i8 = 1;
 /// Quick and dirty way to disable blocks of debug-level code, use `if _d(1) {}` to do something only if global _dbg ≥ 1
-pub fn _d(lvl:i8) -> bool {if _dbg>=lvl{true}else{false}}
+pub fn _d(lvl:i8) -> bool {_dbg >= lvl}
 
 pub fn main_cli() -> Result<()> {
   let opt = options().run();
-  for kdl_file_path in &opt.paths {test_parse_kdl(&kdl_file_path)?;}
+  for kdl_file_path in &opt.paths {test_parse_kdl(kdl_file_path)?;}
   Ok(())
 }
 
