@@ -8,13 +8,15 @@ pub use ::h::alias 	::*;
 pub use ::h::helper	::*;
 
 _mod!(binmod); //→ #[path="binmod/[binmod].rs"] pub mod binmod;
-use crate::binmod::print42;
+use crate::binmod::test_parse_kdl;
 
 use std::error::Error;
 use std::result;
+use std::path::PathBuf;
 
-type Result<T> = result::Result<T, Box<dyn Error>>;
+use miette::Result;
 fn main() -> Result<()> {
-  print42()?;
+  let kdl_file_path = PathBuf::from("./test.kdl");
+  test_parse_kdl(&kdl_file_path)?;
   Ok(())
 }
