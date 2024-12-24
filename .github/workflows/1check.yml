@@ -1,0 +1,100 @@
+name: Cargo Checks Clippy (no fmt)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - Cargo.*
+      - src/**/*
+      - .github/workflows/1check.yml
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - Cargo.*
+      - src/**/*
+      - .github/workflows/1check.yml
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+
+  build-test-clippy-linux:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - build : linux
+            os    : ubuntu-latest
+            target: x86_64-unknown-linux-musl
+
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683    #v4.2.2 24-12
+    - uses: Swatinem/rust-cache@e8e63cdbf2788df3801e6f9a81516b2ca8391886 #v2.7.5git 24-12
+      with:
+        shared-key: "persist-cross-job"
+        workspaces: ./
+    - run: rustup component add clippy
+
+    - name: Run   clippy no features
+      run : cargo clippy --all --no-default-features -- -D warnings
+    - name: Run   tests  no features
+      run : cargo test   --all --no-default-features
+    # - name: Run   clippy no features
+    #   run : cargo clippy --all -- -D warnings
+    # - name: Run   tests  no features
+    #   run : cargo test   --all
+
+  build-test-clippy-windows:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - build: windows
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683    #v4.2.2 24-12
+    - uses: Swatinem/rust-cache@e8e63cdbf2788df3801e6f9a81516b2ca8391886 #v2.7.5git 24-12
+      with:
+        shared-key: "persist-cross-job"
+        workspaces: ./
+    - run: rustup component add clippy
+
+    - name: Run   clippy no features
+      run : cargo clippy --all --no-default-features -- -D warnings
+    - name: Run   tests  no features
+      run : cargo test   --all --no-default-features
+    # - name: Run   clippy no features
+    #   run : cargo clippy --all -- -D warnings
+    # - name: Run   tests  no features
+    #   run : cargo test   --all
+
+  build-test-clippy-macos:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - build: macos
+            os: macos-latest
+            target: x86_64-apple-darwin
+
+    steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683    #v4.2.2 24-12
+    - uses: Swatinem/rust-cache@e8e63cdbf2788df3801e6f9a81516b2ca8391886 #v2.7.5 +3git 24-12
+      with:
+        shared-key: "persist-cross-job"
+        workspaces: ./
+    - run: rustup component add clippy
+
+    - name: Run   clippy no features
+      run : cargo clippy --all --no-default-features -- -D warnings
+    - name: Run   tests  no features
+      run : cargo test   --all --no-default-features
+    # - name: Run   clippy no features
+    #   run : cargo clippy --all -- -D warnings
+    # - name: Run   tests  no features
+    #   run : cargo test   --all
