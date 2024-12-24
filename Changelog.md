@@ -16,5 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + quick & dirty parsing of kdl files
+
 [0.0.0]: https://github.com/eugenesvk/kdl-test/releases/tag/0.0.0
 ## [0.0.0]
