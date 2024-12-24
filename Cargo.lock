@@ -98,6 +98,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "50fd5174866dc2fa2ddc96e8fb800852d37f064f32a45c7b7c2f8fa2c64c77fa"
 dependencies = [
  "owo-colors",
+ "supports-color",
 ]
 
 [[package]]
