@@ -1,5 +1,5 @@
 [package]  # help on keys doc.rust-lang.org/cargo/reference/manifest.html
-name   	= "dummy"
+name   	= "kdl-bin"
 version	= "0.1.0"
 authors	= ["{{authors}}"]
 edition	= "2021"
