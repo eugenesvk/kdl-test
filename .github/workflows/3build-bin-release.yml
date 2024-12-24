@@ -21,7 +21,7 @@ jobs:
           # repository  : my_gh_org/my_gh_repo
           token       : ${{ secrets.CI_GITHUB_TOKEN }} # contents:write (with discussion_category_name)discussions:write
           tag_name    : ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          name        : ${{ github.ref }}
           draft       : true
   release:
     needs: [create-release]
