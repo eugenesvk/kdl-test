@@ -9,10 +9,10 @@
 
 extern crate helperes      as h    ;
 extern crate helperes_proc as hproc;
-use ::h            	::*; // gets macros :: prefix needed due to proc macro expansion
-pub use hproc      	::*; // gets proc macros
-pub use ::h::alias 	::*;
-pub use ::h::helper	::*;
+use ::h        	::*; // gets macros :: prefix needed due to proc macro expansion
+use hproc      	::*; // gets proc macros
+use ::h::alias 	::*;
+use ::h::helper	::*;
 
 use anyhow::{Result,Context,bail};
 use std  	::{env,fs,
@@ -27,7 +27,7 @@ fn main() -> anyhow::Result<()> {
 use kdl_lib::*;
 fn try_main() -> anyhow::Result<()> {
   let task = env::args().nth(1);
-  p!("task_arg1 = {:?} lib = {:?}", task, kdl_lib::lib());
+  p!("task_arg1 = {:?} lib = {:?}", task, kdl_lib::lib())?;
   match task {
     None           	=> tasks::print_help(),
     Some(t)        	=> match t.as_str() {
