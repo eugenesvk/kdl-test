@@ -10,9 +10,9 @@ pub fn options() -> OptionParser<Opt> {
   let paths	= pos::<PathBuf>("PATH").some("Expecting paths to dir/file(s)… (run with -h for help)");
   construct!(Opt {paths}).to_options()
     .version(env!("CARGO_PKG_VERSION"))
-    .descr("Quick&Dirty check of files.kdl for invalid syntax")
+    .descr("Quick & dirty check of KDL files for invalid syntax (only v2 is supported)")
     // .header("")
-    .footer(&*format!("(only v2 is supported)"))
+    // .footer(&*format!("(only v2 is supported)"))
     .with_usage(|doc| {let mut u = Doc::default();/*u.emphasis("Use");u.text(": ");*/
       u.lit(env!("CARGO_BIN_NAME"));u.text(" ");u.doc(&doc);
       u
