@@ -56,7 +56,7 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203 #git 24-12
         with:
-          target: ${{ matrix.cargo-target }}
+          targets: ${{ matrix.cargo-target }}
       - name: Install Linker packages
         if: ${{ matrix.linker != '' }}
         run: |
