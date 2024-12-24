@@ -8,6 +8,16 @@ pub use ::h::helper	::*;
 
 use std::error::Error;
 use std::result;
+use std::fs;
+use std::path::PathBuf;
 
-type Result<T> = result::Result<T, Box<dyn Error>>;
-pub fn print42() -> Result<()> {p!("{}",42)?; Ok(())}
+use kdl::{KdlDocument, KdlValue};
+use miette::Result;
+use miette::IntoDiagnostic;
+
+pub fn test_parse_kdl(kdl_file_path: &PathBuf) -> Result<()> {
+  let kdl_doc_str: String = fs::read_to_string(kdl_file_path).into_diagnostic()?;
+  let doc: KdlDocument = kdl_doc_str.parse()?;
+  println!("✓ parsed as KDL: {kdl_file_path:?}");
+  Ok(())
+}
