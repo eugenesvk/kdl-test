@@ -26,7 +26,7 @@ anyhow       	= "1.0"
 faccess      	= "0.2"
 kdl          	= "6.1.0"
 miette       	= {version="7.4.0",features=["fancy"]}
-bpaf         	= {version="0.9.15",features=["owo-colors"]}
+bpaf         	= {version="0.9.15",features=["bright-color"]} # cli argument parsing
 owo-colors   	= "4.1.0"
 
 [build-dependencies]
