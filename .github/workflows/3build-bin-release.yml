@@ -14,10 +14,12 @@ jobs:
     steps:
       - name: Create Release
         id  : create_release
-        uses: actions/create-release@4c11c9fe1dcd9636620a16455165783b20fc7ea0 #vFinal 21-03
-        env :
-          GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@7b4da11513bf3f43f9999e90eabced41ab8bb048 #v2.2.0 24-12
+        # if  : startsWith(github.ref, 'refs/tags/') #Limit releases to pushes to tags
         with:
+          # body_path   : ${{ github.workspace }}-Changelog.md
+          # repository  : my_gh_org/my_gh_repo
+          token       : ${{ secrets.CI_GITHUB_TOKEN }} # contents:write (with discussion_category_name)discussions:write
           tag_name    : ${{ github.ref }}
           release_name: ${{ github.ref }}
           draft       : true
