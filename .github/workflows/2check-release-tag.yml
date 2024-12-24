@@ -1,14 +1,6 @@
 name: Cargo Checks Clippy Release (no fmt)
 
 on:
-  push:
-    branches: [ "main" ]
-    tags:
-      - 't*'
-  pull_request:
-    branches: [ "main" ]
-    tags:
-      - 't*'
   workflow_dispatch:
 
 env:
