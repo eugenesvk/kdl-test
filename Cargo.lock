@@ -143,22 +143,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 
 [[package]]
-name = "dummy"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bpaf",
- "faccess",
- "helperes 0.1.2",
- "helperes_proc",
- "kdl",
- "log",
- "miette",
- "owo-colors",
- "stderrlog",
-]
-
-[[package]]
 name = "errno"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -277,6 +261,22 @@ dependencies = [
  "num",
  "thiserror",
  "winnow",
+]
+
+[[package]]
+name = "kdl-bin"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bpaf",
+ "faccess",
+ "helperes 0.1.2",
+ "helperes_proc",
+ "kdl",
+ "log",
+ "miette",
+ "owo-colors",
+ "stderrlog",
 ]
 
 [[package]]
@@ -784,11 +784,11 @@ name = "xtask"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dummy",
  "faccess",
  "helperes 0.1.0",
  "helperes_proc",
  "indoc",
+ "kdl-bin",
  "log",
  "stderrlog",
 ]
