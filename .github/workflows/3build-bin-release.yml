@@ -1,0 +1,91 @@
+name: Build binaries on Release
+
+on:
+  push:
+    tags: ["[^t]*"]
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    name   : Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id  : create_release
+        uses: actions/create-release@4c11c9fe1dcd9636620a16455165783b20fc7ea0 #vFinal 21-03
+        env :
+          GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
+        with:
+          tag_name    : ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft       : true
+  release:
+    needs: [create-release]
+    strategy:
+      matrix:
+        include:
+          - os            : windows-latest
+            artifact-name : kdl.1win
+            cargo-target  : x86_64-pc-windows-msvc
+          - os            : macos-latest
+            artifact-name : kdl.2mac
+            cargo-target  : x86_64-apple-darwin
+          - os            : macos-latest
+            artifact-name : kdl.2mac-arm
+            cargo-target  : aarch64-apple-darwin
+          - os            : ubuntu-20.04
+            artifact-name : kdl.3linux
+            cargo-target  : x86_64-unknown-linux-gnu
+          - os            : ubuntu-20.04
+            artifact-name : kdl.3linux-musl
+            cargo-target  : x86_64-unknown-linux-musl
+          # - os            : ubuntu-20.04
+           # artifact-name  : kdl.3linux-arm
+           # cargo-target   : aarch64-unknown-linux-gnu
+           # linker         : gcc-aarch64-linux-gnu
+    name: Build (${{ matrix.artifact-name }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683    #v4.2.2 24-12
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@a54c7afa936fefeb4456b2dd8068152669aa8203 #git 24-12
+        with:
+          target: ${{ matrix.cargo-target }}
+      - name: Install Linker packages
+        if: ${{ matrix.linker != '' }}
+        run: |
+          sudo apt update
+          sudo apt install ${{ matrix.linker }}
+      - name: Build Binary (All features)
+        run: cargo build --verbose --locked --release --target ${{ matrix.cargo-target }}
+        env:
+          CARGO_TARGET_DIR: output
+      - name: Setup Archive + Extension
+        shell: bash
+        run: |
+          mkdir -p staging
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            cp "output/${{ matrix.cargo-target }}/release/kdl.exe" staging/
+            cd staging
+            7z a ../release.zip *
+          else
+            cp "output/${{ matrix.cargo-target }}/release/kdl"     staging/
+            cd staging
+            zip ../release.zip *
+          fi
+      - name: Upload Binary Artifact
+        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b #v4.5.0 24-12
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: release.zip
+      - name: Upload Binary to Release
+        uses: actions/upload-release-asset@ef2adfe8cb8ebfa540930c452c576b3819990faa #vFinal 21-03
+        env:
+          GITHUB_TOKEN: ${{ secrets.CI_GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: release.zip
+          asset_name: ${{ matrix.artifact-name }}.zip
+          asset_content_type: application/zip
