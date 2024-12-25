@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file
 
-[unreleased]: https://github.com/eugenesvk/kdl-test/compare/0.0.1...HEAD
+[unreleased]: https://github.com/eugenesvk/kdl-test/compare/0.0.2...HEAD
 ## [Unreleased]
 <!-- - ✨ __Added__ -->
   <!-- + new features -->
@@ -16,6 +16,8 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+[0.0.2]: https://github.com/eugenesvk/kdl-test/releases/tag/0.0.2
+## [0.0.2]
 - ✨ __Added__
   + `-f`/`-ff`/`-fff` flag to print the parsed document back in display/debug/detailed debug format
 
