@@ -20,8 +20,8 @@ jobs:
           # body_path   : ${{ github.workspace }}-Changelog.md
           # repository  : my_gh_org/my_gh_repo
           token       : ${{ secrets.CI_GITHUB_TOKEN }} # contents:write (with discussion_category_name)discussions:write
-          tag_name    : ${{ github.ref }}
-          name        : ${{ github.ref }}
+          tag_name    : ${{ github.ref      }}  # Name of tag     ≝ github.ref_name
+          name        : ${{ github.ref_name }}  # Name of release ≝ tag name
           draft       : true
   release:
     needs: [create-release]
