@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + `-l` flag to print processed file path
+
 [0.0.2]: https://github.com/eugenesvk/kdl-test/releases/tag/0.0.2
 ## [0.0.2]
 - ✨ __Added__
