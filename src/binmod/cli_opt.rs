@@ -5,7 +5,7 @@ use bpaf	::{*, long as l, short as s, positional as pos}; // short names to allo
 use super::bpaf_ext::*;
 use std::path::PathBuf;
 
-#[derive(Debug,Clone)] pub struct Opt {pub fmt:usize, pub paths:Vec<PathBuf>}
+#[derive(Debug,Clone)] pub struct Opt {pub fmt:usize, pub log:bool, pub paths:Vec<PathBuf>}
 
 // use owo_colors::OwoColorize;
 pub fn options() -> OptionParser<Opt> {
@@ -17,7 +17,10 @@ pub fn options() -> OptionParser<Opt> {
     d}).switch().many().guard(|x| x.len() <= 3, "> 3 formatting flag repetitions")
     .map(|x| if x[0] {x.len()}else{x.len()-1});
 
-  construct!(Opt {fmt, paths}).to_options()
+  let log	= s('l').l("log"   ).h({let mut d = Doc::default();d.text("Print processed file path");
+    d}).switch();
+
+  construct!(Opt {fmt, log, paths}).to_options()
     .version(env!("CARGO_PKG_VERSION"))
     .descr("Quick & dirty check of KDL files for invalid syntax (only v2 is supported)")
     // .header("")
