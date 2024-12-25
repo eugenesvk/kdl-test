@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file
 <!-- - 🔒 __Security__ -->
   <!-- + vulnerabilities -->
 
+- ✨ __Added__
+  + `-f`/`-ff`/`-fff` flag to print the parsed document back in display/debug/detailed debug format
+
 [0.0.1]: https://github.com/eugenesvk/kdl-test/releases/tag/0.0.1
 ## [0.0.1]
 - ✨ __Added__
