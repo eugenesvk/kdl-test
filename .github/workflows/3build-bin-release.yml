@@ -16,6 +16,7 @@ jobs:
         id  : create_release
         uses: softprops/action-gh-release@7b4da11513bf3f43f9999e90eabced41ab8bb048 #v2.2.0 24-12
         # if  : startsWith(github.ref, 'refs/tags/') #Limit releases to pushes to tags
+        # list of GH props: docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs
         with:
           # body_path   : ${{ github.workspace }}-Changelog.md
           # repository  : my_gh_org/my_gh_repo
