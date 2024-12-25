@@ -23,13 +23,20 @@ pub fn _d(lvl:i8) -> bool {_dbg >= lvl}
 
 pub fn main_cli() -> Result<()> {
   let opt = options().run();
-  for kdl_file_path in &opt.paths {parse_file_kdl(kdl_file_path)?;}
+  for kdl_file_path in &opt.paths {parse_file_kdl(kdl_file_path, opt.fmt)?;}
   Ok(())
 }
 
-pub fn parse_file_kdl(kdl_file_path: &PathBuf) -> Result<()> {
+pub fn parse_file_kdl(kdl_file_path: &PathBuf, fmt: usize) -> Result<()> {
   let kdl_doc_str: String = fs::read_to_string(kdl_file_path).into_diagnostic()?;
-  let _doc: KdlDocument = kdl_doc_str.parse()?;
-  println!("✓ parsed as KDL: {kdl_file_path:?}");
+  if fmt > 0 {let mut doc: KdlDocument = kdl_doc_str.parse()?;
+    doc.autoformat();
+    println!("✓ parsed as KDL: {kdl_file_path:?}");
+    match fmt {
+      1	=> {println!("{}"   ,doc);},
+      2	=> {println!("{:?}" ,doc);},
+      _	=> {println!("{:#?}",doc);},}
+  } else     {let       _: KdlDocument = kdl_doc_str.parse()?;
+    println!("✓ parsed as KDL: {kdl_file_path:?}");}
   Ok(())
 }
